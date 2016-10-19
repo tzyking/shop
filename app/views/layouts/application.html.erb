@@ -53,9 +53,19 @@
             <li><%= link_to "Link3", "/path3"  %></li>
           </ul>
           <%= form_tag(products_path, method: "get", class: "navbar-form navbar-left", role: "search") do %>
-            <%= text_field_tag "q[name_cont]", params["q"]["name_cont"], class: "form-control input-sm search-form", placeholder: "输入商品名称" %>
+            <%= text_field_tag "q[name_cont]", params["q"] && params["q"]["name_cont"], class: "form-control input-sm search-form", placeholder: "输入商品名称" %>
             <%= submit_tag("搜索", class: "btn btn-info btn-sm") %>
           <% end %>
+
+          <ul class="nav navbar-nav navbar-right">
+            <% if user_signed_in? %>
+              <li><%= link_to current_user.email, profile_path %></li>
+              <li><%= link_to "退出", destroy_user_session_path, method: :delete %></li>
+            <% else %>
+              <li><%= link_to "登录", new_user_session_path %></li>
+              <li><%= link_to "注册", new_user_registration_path %></li>
+            <% end %>
+          </ul>
         </div>
       </div>
     </div>
@@ -82,7 +92,8 @@
       <footer>
         <p>&copy; Company 2016</p>
       </footer>
-
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
     </div> <!-- /container -->
 
   </body>
