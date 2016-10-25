@@ -6,6 +6,7 @@ class ProductsController < ApplicationController
   def index
     @q = Product.ransack(params[:q])
     @products = @q.result(distinct: true)
+    @product = Product.new
   end
 
   # GET /products/1
@@ -31,9 +32,11 @@ class ProductsController < ApplicationController
       if @product.save
         format.html { redirect_to @product, notice: 'Product was successfully created.' }
         format.json { render :show, status: :created, location: @product }
+        format.js
       else
         format.html { render :new }
         format.json { render json: @product.errors, status: :unprocessable_entity }
+        format.js
       end
     end
   end
